@@ -47,7 +47,9 @@
     "brand": "Samsung",
     "category": "smartphones",
     "thumbnail": "https://i.dummyjson.com/data/products/3/thumbnail.jpg",
-    "images": ["https://i.dummyjson.com/data/products/3/1.jpg"]
+    "images": [
+      "https://i.dummyjson.com/data/products/3/1.jpg"
+    ]
   },
   {
     "id": 4,
@@ -904,10 +906,10 @@
     ]
   },
   {
-    "id": 50,
-    "title": "Women Shoes",
-    "description": "2020 New Arrivals Genuine Leather Fashion Trend Platform Summer Women Shoes",
-    "price": 36,
+    "id": "id",
+    "title": "title",
+    "description": "description",
+    "price": "price",
     "discountPercentage": 16.87,
     "rating": 4.33,
     "stock": 46,
