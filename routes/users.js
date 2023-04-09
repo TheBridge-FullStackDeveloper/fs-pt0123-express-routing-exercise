@@ -1,6 +1,9 @@
 const router = require('express').Router()
-const ArrayUsers = require("../db/users.json");
+
 // Your code goes here!
+
+// Requerir el archivo users.json
+const ArrayUsers = require("../db/users.json");
 // Funcion para calcular la edad con la fecha de cumpleaños.
 function functionAge (fecha) {
     const today = new Date();
@@ -112,11 +115,25 @@ router.get('/:id/details',(req,res,next)=>{
     const usersDetails = ArrayUsers.find(obj => obj.id.toString() === userID);
 
     res.status(200).json({
-        succes: true, 
+        success: true, 
         data: {
             message: 'response from GET "/users/:id/details" endpoint',
             data: usersDetails
         }
+    })
+})
+
+// Ruta post para añadir un usuario nuevo
+router.post('/users',(req, res, next)=> {
+    console.log("Añadir un user");
+
+    res.status(200).json({
+        success: true, 
+        data: {
+            message: 'response from POST "/users" endpoint',
+            data: req.body
+        }
+
     })
 })
 
