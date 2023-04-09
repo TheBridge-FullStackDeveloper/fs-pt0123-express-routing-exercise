@@ -190,6 +190,40 @@ router.post( './users', ( res, req, next ) =>{
 });
 
 
+// Given an ID, modify that user woth the information received in body
+// Change only the data received if it exists =>
+router.put('./users/:id', (req, res, next) =>{
+
+    let userChanged;
+
+    const updatingUser = ( object1, object2 ) => {
+        const newKeys = Object.keys(object1);
+        const newValues = Object.values(object1);
+
+        for ( let i = 0; i < newKeys.length; i++ ){
+            if( newKeys[i] in object2 ){
+                object2[newKeys[i]] = newValues[i];
+            }
+        }
+    }
+
+    for( let i = 0; i < allUsers.length; i++ ){
+        if( allUsers[i].id === parseInt( req.params.id ) ){
+            updatingUser(req.body, allUsers[i]);
+            userChanged = allUsers[i];
+        }
+    }    
+
+    fs.writeFileSync('./db/users.json', JSON.stringify(allUsers, null, 2));
+    
+    res.status(200).json({
+        success : true,
+        message : 'Data modified from user...',
+        data    : userChanged,
+    });
+});
+
+
 // Given an ID, delete that user:
 // DELETE /users/:id
 router.delete( './users/:id', ( req, res, next ) =>{
