@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const ArrayUsers = require("../db/users.json");
 // Your code goes here!
-
+// Funcion para calcular la edad con la fecha de cumpleaños.
 function functionAge (fecha) {
     const today = new Date();
     const birthday = new Date(fecha);
@@ -11,7 +11,7 @@ function functionAge (fecha) {
     return age;
 };
 
-
+// Ruta para acceder a los users y ver solo las propiedades marcadas. 
 router.get("/", (req, res, next) => {
     console.log("Estos son los firstname, lastname  e image");
     const data = ArrayUsers.map(user => ({ Firstname: user.firstName, Lastname: user.lastName, Image: user.image }));
@@ -23,6 +23,8 @@ router.get("/", (req, res, next) => {
         }
     })
 })
+
+//Ruta para ver los tipos de tarjeta segun el tipo seleccionado por el "cliente"
 router.get("/card/:type",(req,res,next)=>{
     console.log("usuarios con el mismo tipo de tarjeta");
     const type = req.params.type;
@@ -47,6 +49,7 @@ router.get("/card/:type",(req,res,next)=>{
     })
 })
 
+// Ruta para devolver datos segun condiciones de edad y peso.
 router.get("/donors",(req,res,next)=>{
     console.log("Datos por edad y peso");
     const donors = req.params.donors;
@@ -70,6 +73,7 @@ router.get("/donors",(req,res,next)=>{
     })
 })
 
+// Ruta para devolver determinadas propiedades con cambios, segun un id solicitado por el "cliente". 
 router.get("/:id", (req, res, next) => {
     console.log("esto es la info de id");
     const ArrayDataID = ArrayUsers.filter(obj => obj.id.toString() === req.params.id);
@@ -100,9 +104,8 @@ router.get("/:id", (req, res, next) => {
 
     })
 
-
 })
-
+// Ruta para devolver todos los datos del users
 router.get('/:id/details',(req,res,next)=>{
     console.log("Esto son los resultados al llamar id/details");
     const userID = req.params.id;
