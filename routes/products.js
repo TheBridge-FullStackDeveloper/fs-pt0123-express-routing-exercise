@@ -24,6 +24,48 @@ router.get("/", (req, res, next) => {
   });
 });
 
+router.get("/stock", (req, res, next) => {
+  const stock = req.query.max;
+  if (stock) {
+    const filterProd = prod.filter((product) => product.stock <= stock);
+    res.json(filterProd);
+  } else {
+    res.json(prod);
+  }
+});
+
+router.get("/category", (req, res, next) => {
+  const category = req.query.category;
+  if (category) {
+    const filtered = prod.filter((product) => product.category === category);
+    res.json(filtered);
+  } else {
+    res.status(404).send("Product not found");
+  }
+});
+
+router.get("/sales", (req, res, next) => {
+  const arr = [];
+  const discounts = [];
+  for (let i = 0; i < prod.length; i++) {
+    discounts.push(prod[i].discountPercentage);
+  }
+  const sorted = discounts.sort((a, b) => a - b);
+  for (let i = 0; i < prod.length; i++) {
+    if (prod[i].discountPercentage === sorted[sorted.length - 3])
+      arr.push(prod[i]);
+    if (prod[i].discountPercentage === sorted[sorted.length - 2])
+      arr.push(prod[i]);
+    if (prod[i].discountPercentage === sorted[sorted.length - 1])
+      arr.push(prod[i]);
+  }
+  if (arr.length === 3) {
+    res.json(arr);
+  } else {
+    res.status(404).send("Products not found");
+  }
+});
+
 router.get("/:id", (req, res, next) => {
   const id = parseInt(req.params.id);
 
@@ -41,17 +83,6 @@ router.get("/:id", (req, res, next) => {
       }
     }
   });
-});
-
-//la siguiente ruta no me funciona
-router.get("/stock", (req, res, next) => {
-  const stock = req.query.stock;
-  if (stock) {
-    const filterProd = prod.filter((product) => product.stock <= stock);
-    res.json(filterProd);
-  } else {
-    res.json(prod);
-  }
 });
 
 router.get("/", (req, res, next) => {});
