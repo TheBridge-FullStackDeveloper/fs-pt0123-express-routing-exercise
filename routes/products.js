@@ -103,12 +103,35 @@ router.post( '/', (req, res, next) =>{
 
 // Modify a product: Dado un id, modifica ese producto con la información recibida en el body.
 // PUT /products/:id
-router.put('/products/:id', (req, res, next) => {
-    //TODO:
+router.put('/:id', (req, res, next) => {
+    //TODO: Need to be check just in case....
+    let productModified ;
 
+    const updatingProduct = (object1, object2) => {
+        const newKeys   = Object.keys(object1);
+        const newValues = Object.keys(object1);
+        
+        for( let i = 0; i < newKeys.length; i++ ){
+            if( newKeys[i] in object2 ){
+                object2[ newKeys[i] ] = newValues[i];
+            }
+        }
+        
+    }
+
+    for( let i = 0; i < allProducts.length; i++ ){
+        if( allProducts[i].id === parseInt( req.params.id ) ){
+            updatingProduct(req.body, allProducts[i]);
+            productModified = allProducts[i];
+        }
+    }
+
+    fs.writeFileSync('./db/products.json', JSON.stringify(allProducts, null, 2));
 
     res.status( 200 ).json({
         success: true,
+        message: 'Product modified...',
+        data   : productModified, 
     })
 
 });

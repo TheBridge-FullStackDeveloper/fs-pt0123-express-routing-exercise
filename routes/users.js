@@ -190,7 +190,7 @@ router.post( './users', ( res, req, next ) =>{
 });
 
 
-// Given an ID, modify that user woth the information received in body
+// Given an ID, modify that user with the information received in body
 // Change only the data received if it exists =>
 router.put('./users/:id', (req, res, next) =>{
 
@@ -242,6 +242,5 @@ router.delete( './users/:id', ( req, res, next ) =>{
     });
 
 });
-
 
 module.exports = router
