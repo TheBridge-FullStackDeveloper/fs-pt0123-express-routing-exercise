@@ -11,7 +11,7 @@ function functionAge (fecha) {
     const yearsDate = today.getFullYear() - birthday.getFullYear();
     const age = birthday.getMonth() - today.getMonth();
 
-    return age;
+    return yearsDate;
 };
 
 // Ruta para acceder a los users y ver solo las propiedades marcadas. 
@@ -64,7 +64,7 @@ router.get("/donors",(req,res,next)=>{
         weight: obj.weight,
         bloodGroup: obj.bloodGroup
     })); 
-    const donorsFilter = ObjDonors.filter((obj)=>{ return obj.weight > 50 });
+    const donorsFilter = ObjDonors.filter((obj)=>{ return obj.weight > 50 && obj.age > 18 && obj.age < 60 });
 
     res.status(200).json({
         succes: true,
@@ -136,6 +136,14 @@ router.post('/users',(req, res, next)=> {
 
     })
 })
+
+router.put('/users/:id', (req,res,next)=>({
+    success : true,
+    data: {
+        message: 'response from PUT "/users/:id" endpoint',
+        data: req.body
+    }
+}))
 
 
 
