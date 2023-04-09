@@ -64,4 +64,14 @@ router.get("/:id/details", (req, res, next) => {
   }
 });
 
+router.get("/card/:type", (req, res, next) => {
+  const cardType = req.params.type;
+  const usersCard = users.filter((user) => user.bank.cardType === cardType);
+  if (usersCard.length > 0) {
+    res.send(usersCard);
+  } else {
+    res.status(404).send("No users found with the specified card type");
+  }
+});
+
 module.exports = router;
