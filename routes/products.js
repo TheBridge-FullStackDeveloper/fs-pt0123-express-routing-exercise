@@ -2,16 +2,16 @@ const router = require('express').Router()
 
 const fs = require("fs");
 
-router.put("/products/:id", (req,res)=>{
+router.put("/products/:id", (req, res) => {
   fs.readFile("./db/products.json", "utf-8", (error, datos) => {
-    if (error){
+    if (error) {
       console.log(erorr);
       res.status(500).send("error al leer el archivo de productos");
       return;
     }
-    const products =JSON.parse(datos);
-    const productToMod= products.find(producto => producto.id === parseInt(req.params.id));
-    if (productToMod){
+    const products = JSON.parse(datos);
+    const productToMod = products.find(producto => producto.id === parseInt(req.params.id));
+    if (productToMod) {
       Object.keys(req.body).forEach(key => {
         if (productoModificado.hasOwnProperty(key)) {
           productoModificado[key] = req.body[key];
@@ -30,23 +30,38 @@ router.put("/products/:id", (req,res)=>{
 
 
 
-router.post("/products/add", (req, res, next) => {
+router.post("/products", (req, res, next) => {
   fs.readFile("./db/products.json", "utf-8", (error, datos) => {
     if (error) {
       console.log(error);
-      res.status(500).send('Error al leer el archivo de productos');
+      res.status(500).json({
+        ok: false,
+        msg: 'Error al leer el archivo de productos'
+      });
       return;
     }
 
     const products = JSON.parse(datos)
+    let nuevoProducto={
+      id:products.length + 1,
+      ...req.body
+    };
 
-    products.push(req.body)
+    products.push(nuevoProducto)
     fs.writeFile('./db/products.json', JSON.stringify(products), 'utf8', error => {
       if (error) {
         console.log(error);
-        res.status(500).send("error al escribir el archivo JSON");
+        res.status(500).json({
+          ok: false,
+          msg: "error al escribir el archivo JSON"
+        });
       }
-      res.status(200).send("objeto agrefado exitosamente");
+      res.status(200).json({
+        ok: true,
+        msg: "objeto agrefado exitosamente",
+        producto:nuevoProducto
+
+      });
     })
   })
 })
