@@ -86,7 +86,7 @@ router.get("/:id", (req, res, next) => {
         email: user.email,
         phone: user.phone,
         age : functionAge(new Date(user.birthDate)),
-        // domain
+        domain : user.domain,
         ip: user.ip,
         city: user.address.city,
         state: user.address.state,
@@ -95,6 +95,7 @@ router.get("/:id", (req, res, next) => {
         cardNumber: user.bank.cardNumber.replace(/\d(?=\d{4})/g, "*"),
         cardType: user.bank.cardType,
         currency: user.bank.currency,
+        iban:user.bank.iban.replace(' ', ''),
         // iban (quítale los espacios y pon la misma máscara de asteriscos que para el número de tarjeta)
         userAgent: user.userAgent,
     }));
