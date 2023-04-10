@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 // Your code goes here!
 const TypeProducts = require("../db/products.json")
-
+// Devolver todos los productos
 router.get("/types", (req, res, next) => {
     console.log("Estos son tus productos")
     res.status(200).json({
@@ -10,7 +10,7 @@ router.get("/types", (req, res, next) => {
         data: TypeProducts
     })
 })
-
+// Devuelve todos los productos que tengan un stock inferior o igual que el indicado por query string
 router.get("/stock", (req, res, next) => {
     console.log("esto son los stocks")
     const stockContainer = TypeProducts.filter(obj => obj.stock <= req.query.max)
@@ -24,7 +24,7 @@ router.get("/stock", (req, res, next) => {
 
     })
 })
-
+// Devuelve todos los productos que sean de una categoría determinada
 router.get("/category", (req, res, next) => {
     console.log("esto son las categorías")
     const Container = TypeProducts.filter(obj => obj.category = req.query.name)
@@ -37,7 +37,7 @@ router.get("/category", (req, res, next) => {
 
     })
 })
-
+// Saca los 3 productos con el mayor descuento
 router.get("/sales", (req, res, next) => {
     console.log("estos son los descuetos")
     const container = TypeProducts.sort((a, b) => b.discountPercentage - a.discountPercentage);
@@ -52,7 +52,7 @@ router.get("/sales", (req, res, next) => {
 
     })
 })
-
+// Dado un id, devuelve solo ese produc
 router.get("/:id", (req, res, next) => {
     console.log("estos son los id")
     const container = TypeProducts.filter(obj => obj.id.toString() === req.params.id)
@@ -65,7 +65,7 @@ router.get("/:id", (req, res, next) => {
 
     })
 })
-
+// Añade un producto nuevo (no olvides su id):
 router.post('/new', (req, res, next) => {
     console.log("nuevo producto")
     res.status(200).json({
@@ -92,11 +92,11 @@ router.post('/new', (req, res, next) => {
 //     })
 //  })
 
-
+// Dado un id, elimina ese producto
 router.delete("/:id", (req, res, next) => {
     console.log("eliminas producto")
     const deleteProduct = TypeProducts.filter(obj => obj.id.toString() !== req.params.id)
-    console.log(deleteProduct)
+
     res.status(200).json({
         succes: true,
         data: {

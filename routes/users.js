@@ -137,15 +137,26 @@ router.post('/users',(req, res, next)=> {
     })
 })
 
-router.put('/users/:id', (req,res,next)=>({
-    success : true,
-    data: {
-        message: 'response from PUT "/users/:id" endpoint',
-        data: req.body
-    }
-}))
+// router.put('/users/:id', (req,res,next)=>({
+//     success : true,
+//     data: {
+//         message: 'response from PUT "/users/:id" endpoint',
+//         data: req.body
+//     }
+// }))
 
+router.delete('/:id', (req,res,next)=>{
+    console.log("Eliminar usuarios segun id")
+    const deleteUsers = ArrayUsers.filter(obj => obj.id.toLocaleString() !== req.params.id)
 
+    res.status(200).json({
+        success : true,
+        data: {
+            message: 'response from DELETE "/users/:id" endpoint',
+            usersID: deleteUsers
+    } 
 
+    })
+})
 
 module.exports = router
