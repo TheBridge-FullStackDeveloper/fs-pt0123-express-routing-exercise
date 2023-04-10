@@ -2,31 +2,7 @@ const router = require('express').Router()
 
 const fs = require("fs");
 
-router.put("/products/:id", (req, res) => {
-  fs.readFile("./db/products.json", "utf-8", (error, datos) => {
-    if (error) {
-      console.log(erorr);
-      res.status(500).send("error al leer el archivo de productos");
-      return;
-    }
-    const products = JSON.parse(datos);
-    const productToMod = products.find(producto => producto.id === parseInt(req.params.id));
-    if (productToMod) {
-      Object.keys(req.body).forEach(key => {
-        if (productoModificado.hasOwnProperty(key)) {
-          productoModificado[key] = req.body[key];
-        }
-      });
-      fs.writeFile('./db/products.json', JSON.stringify(products), 'utf8', error => {
-        if (error) {
-          console.log(error);
-          res.status(500).send("error al escribir el archivo JSON");
-        }
-        res.status(200).send("objeto agrefado exitosamente");
-      })
-    }
-  })
-})
+
 
 
 
